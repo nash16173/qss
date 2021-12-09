@@ -1,18 +1,15 @@
-# QSS (Quantitative Social Science)
-This repository is replication and exercise  codes for Quantitaitve social science
-Supplementary Materials for the book, [**Quantitative Social Science: An Introduction**](http://press.princeton.edu/titles/11025.html), published by Princeton University Press in 2017. See the [**book website**](http://qss.princeton.press/). It is also available for purchase at vendors like [**Amazon**](https://www.amazon.com/Quantitative-Social-Science-Kosuke-Imai/dp/0691175462).
+# Chapter 1: Introduction
 
-This repository contains the data sets and R scripts for all of the chapters:
+## Code
+1. The markdown file for the entire chapter: [intro.Rmd](intro.Rmd)
+2. The pdf file with outputs: [intro.pdf](intro.pdf) 
+3. The R script file for the entire chapter: [intro.R](intro.R)
+4. The script used in Section 1.3.8: [UNpop.R](UNpop.R)
 
-[**Introduction**](https://github.com/kosukeimai/qss/blob/master/INTRO)
-[**Causality**](https://github.com/kosukeimai/qss/blob/master/CAUSALITY)
-[**Measurement**](https://github.com/kosukeimai/qss/blob/master/MEASUREMENT)
-[**Prediction**](https://github.com/kosukeimai/qss/blob/master/PREDICTION)
-[**Discovery**](https://github.com/kosukeimai/qss/blob/master/DISCOVERY)
-[**Probability**](https://github.com/kosukeimai/qss/blob/master/PROBABILITY)
-[**Uncertainty**](https://github.com/kosukeimai/qss/blob/master/UNCERTAINTY)
+## Data sets
+### Main text
+1. World population estimates data (Table 1.2): [UNpop.csv](UNpop.csv), [UNpop.RData](UNpop.RData), [UNpop.dta](UNpop.dta) 
 
-In addition, the repository contains:
-
-[**Errata**](https://github.com/kosukeimai/qss/blob/master/errata/QSSerrata.pdf)
-[**Sample course syllabi**](https://github.com/kosukeimai/qss/blob/master/syllabus)
+### Exercises
+2. US election turnout data (Table 1.3): [turnout.csv](turnout.csv)
+3. Fertility and Mortality estimates data (Table 1.4): [World.csv](World.csv), [Kenya.csv](Kenya.csv), [Sweden.csv](Sweden.csv)
