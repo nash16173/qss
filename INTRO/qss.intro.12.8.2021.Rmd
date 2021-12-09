@@ -20,7 +20,7 @@ output:
 
 ## Section 1.3.1: Arithmetic Operations
 ```{r}
-5 + 3
+5 - 3
 5 - 3
 5 / 3
 5 ^ 3
