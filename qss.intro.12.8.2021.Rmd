@@ -1,0 +1,281 @@
+---
+title: "qss.intro"
+author: "Nari"
+date: "12/8/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+# Section 1.1: Overview of the Book
+
+# Section 1.2: How to Use this Book
+```{r, eval = FALSE}
+# install.packages("swirl") # install the package
+# library(swirl) # load the package
+# install_course_github("kosukeimai", "qss-swirl") # install the course
+# library(swirl)
+# swirl()
+```
+# Section 1.3: Introduction to R
+
+## Section 1.3.1: Arithmetic Operations
+```{r}
+5 + 3
+5 - 3
+5 / 3
+5 ^ 3
+5 * (10 - 3)
+sqrt (4)
+```
+## Section 1.3.2: Objects
+
+```{r}
+# Using assignment operator <-, create a "object" such as short cut.
+result <- 5 + 3
+result
+print (result)
+
+# If different values are assigned to the same object name, the object value will be replaced into new one.
+result <- 5 - 3
+result
+
+ls() # see the object list in Environment
+
+# Up to here, we assigned numerical value to a object.
+# Next, let's assign string to a object.
+nari <- "student"
+nari
+nari <- "student and 24 age" # In case of string data, space is available.
+nari
+
+# Using quotation mark "", regard numerical value as string data. 
+Result <- "5"
+Result
+# It is impossible to execute arithmetic operations on strings.
+# Result / 3
+# sqrt(Result)
+# Result/3 でエラー:
+# sqrt(Result) でエラー:
+# Distinguish between object types by assigning a class to each object.
+result
+class(result)
+Result
+class(Result)
+class(sqrt)
+```
+
+## Section 1.3.3: Vectors
+
+```{r}
+# The simplest (but most inefficient) way to enter data into R
+# C() refer to "concatenate"
+world.pop <- c(2525779, 3026003, 3691173, 4449049, 5320817,
+    6127700, 6916183) # estimate of world population (unit: 1000 persons)
+world.pop
+
+# Grouping some vector
+pop.first <- c(2525779, 3026003, 3691173)
+pop.second <- c(4449049, 5320817, 6127700)
+pop.all <- c(pop.first, pop.second, 6916183)
+pop.all
+
+# Use square brackets "[ ]" to extract some element from vector
+# This is called 要素指定(indexing)
+world.pop[2] # extract no.2 element
+world.pop[c(2, 4)] # extract element vector
+world.pop[-3] #remove
+# Original vector does not change
+# Let's divide each element in the vector by 1000 to get an estimate in 1,000,000 people unit.
+pop.million <- world.pop / 1000
+pop.million
+# Population estimates for each decade expressed as a ratio to the 1950 population estimate
+pop.rate <- world.pop / world.pop[1]
+pop.rate
+
+# Growth rate of population in each age group
+pop.increase <- world.pop[-1] - world.pop[-7]
+percent.increase <- (pop.increase / world.pop[-7]) * 100
+percent.increase
+# You can also change the value of a particular element in a vector by using the assignment operator (<-)
+percent.increase [c(1,2)] <- c(20,22) # Round the first two elements to an integer
+percent.increase　# Caution: irreversible
+```
+## Section 1.3.4: Functions
+
+```{r}
+# length: Get or set the length of vectors
+length(world.pop)
+# min: minimum
+min(world.pop)
+# max: maximum
+max(world.pop)
+# range: data range
+range(world.pop)
+# mean: average
+mean(world.pop)
+# sum: sum
+sum(world.pop)
+# another way to get mean
+sum(world.pop) / length(world.pop)
+
+# multiple argument
+# function(input1, input2) # In this case, argument's order matters
+# Better way: function(arg1 = input1, arg2 = input2)
+# seq: Create a vector of arithmetic sequence
+year <- seq(from = 1950, to = 2010, by = 10) # from; start, to; end, by; difference
+year
+seq(to = 2010, by = 10, from = 1950) # order does not matter because of indicating object
+seq(from = 2010, to = 1950, by = -10)
+2008:2012 # simple sequence
+2012:2008
+# Access the elements of a vector  and name it.
+names(world.pop) # We got NULL because never named each element in the object "world.pop": no label
+names(world.pop) <- year
+names(world.pop)
+world.pop
+# edit your own function 
+myfunction <- function(input1, input2, ...,inputN){
+  # define the output
+  return(output)
+}
+
+my.summary <- function(x){ # this function takes one argument
+  s.out <- sum(x)
+  l.out <- length(x)
+  m.out <- s.out / l.out
+  out <- c(s.out, l.out, m.out) # define the output
+  names(out) <- c("sum", "length", "mean") # labeling
+  return(out) # Call the output
+  }
+z <- 1:10
+my.summary(z)
+my.summary(world.pop)
+# Those objects x, s.out, l.out, m.out, and out in the above example are defined within the function, independent of the environment in which the function is created. This means that no problem for using the same name for objects inside and outside the function.
+```
+
+## Section 1.3.5: Data Files
+```{r}
+ setwd("~/OneDrive - Osaka University/社会科学のためのデータ分析入門")
+getwd()
+ setwd("~/OneDrive - Osaka University/社会科学のためのデータ分析入門/INTRO")
+getwd()
+
+```
+
+```{r}
+# Load UNpop.csv
+UNpop <- read.csv("UNpop.csv") # loading "UNpop.csv" as data frame
+class(UNpop)
+rm(UNpop) # delete a data frame
+# Load UNpop.RData
+load("UNpop.Rdata")
+# If you set up a working directory as described above, there is no need to type in a long file path.
+# See a data frame
+View(UNpop)
+# return vectors of variables
+names(UNpop)
+# return numbers of row
+nrow(UNpop)
+# return numbers of column
+ncol(UNpop)
+# combination of "nrow" and "ncol"
+dim(UNpop)
+# summarize
+summary(UNpop)
+
+# $ operator
+# This is one of the ways to access a variable contained in a data frame object. This will return a vector including the specified variables.
+UNpop$world.pop
+UNpop$year
+# extract the elements in a data frame
+# Any data frame is two dimension
+# [rows, columns] 要素指定(indexing)
+UNpop[,"world.pop"] # extract the column "world.pop"
+UNpop[c(1,2,3),] # extract the first three rows and columns
+UNpop[1:3, "year"] # extract the first three rows in the column "year"
+
+# Extract some observations from one unique variable in a data frame
+# 一つの要素指定(one indexing)
+UNpop$world.pop[seq(from = 1, to = nrow(UNpop), by = 2)] #  "world.pop" 変数から奇数番目の要素を取り出す
+
+# In R, missing values is referred to NA "negation"
+world.pop <- c(UNpop$world.pop, NA) # Adding NA to world.pop
+world.pop
+mean(world.pop) # return NA because of added NA
+mean(world.pop, na.rm = TRUE) # Exclude missing value "NA", then return mean
+```
+
+## Section 1.3.6: Saving Objects
+```{r, eval = FALSE}
+ls() # see the object list in Environment
+# These objects will disappear when the current session is closed. To avoid this, save the workspace as an RData file each time you exit the session.
+# keep "拡張子" RData
+# save.image("/Users/sakatanarimasa/OneDrive - Osaka University/社会科学のためのデータ分析入門/INTRO/Chapter1.RData") 
+
+# save the identified object
+# save(UNpop, file = "Chapter1.RData")
+# save(world.pop, year, file = "/Users/sakatanarimasa/OneDrive - Osaka University/社会科学のためのデータ分析入門/INTRO/Chapter1.RData")
+
+# save the workspace as a csv file
+write.csv(UNpop, file = "UNpop.csv")
+
+# Use the object saved in RData
+# load("Chapter1.RData")
+
+```
+
+## Section 1.3.7: Packages
+```{r}
+# install.packages("foreign")
+# library("foreign") 
+# Reads a ﬁle in Stata version 5–12 binary format into a data frame
+# read.dta("UNpop.dta") # Stata file
+# read.spss("UNpop.sav") # SPSS file
+# パッケージのインストール
+# パッケージの読み込み
+
+# Instead of read.dta, use haven package "read_dta"
+# install.packages("haven")
+library(haven)
+read_dta("UNpop.dta") # Stata file
+
+# save as Stata file
+# write.dta(UNpop, file = "UNpop.dta")
+```
+
+## Section 1.3.8: Programming and Learning Tips
+```{r}
+
+
+
+
+
+
+
+
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
