@@ -1,0 +1,130 @@
+---
+title: "causality.13.12.2021"
+author: "Nari"
+date: "12/13/2021"
+output: html_document
+---
+
+# Section 2.1: Racial Discrimination in the Labor Market
+```{r}
+resume <- read.csv("resume.csv")
+nrow(resume) # return row number
+ncol(resume) # return column number
+dim(resume) # return vector of nrow and ncol number
+head(resume) # See the first couple of obs in each variables
+summary(resume) # see the summary statistics of the selected variables.
+## 分割表(contingency table，クロス集計表 cross tabulation)
+race.call.tab <- table(race = resume$race, call = resume$call)
+race.call.tab
+addmargins(race.call.tab) # add sum in table
+## overall callback rate: total callbacks divided by the sample size
+sum(race.call.tab[,2]) / nrow(resume) # (157 + 235) / 4870
+## callback rates for each race
+race.call.tab[1,2] / sum(race.call.tab[1,]) # black, 157 / 2435
+race.call.tab[2,2] / sum(race.call.tab[2,]) # white, 235 / 2435
+# race.call.tab[1,]  
+#     0    1 
+#  2278  157 
+# race.call.tab[,2]
+#  black white 
+#   157   235 
+(race.call.tab[1,2] / sum(race.call.tab[1,]))  - (race.call.tab[2,2] / sum(race.call.tab[2,]) )
+## Resumes passed with a black name was 0.032 (3.2 percentage points) lower than for resumes passed with a white name.
+## Unknown if this is the result of intentional discrimination or not.
+## But, this suggests that there is racial discrimination in the labor market.
+mean(resume$call) # easiest way to calculate overall callback rate
+```
+
+# Section 2.2: Subsetting the Data in R
+```{r}
+class(TRUE)
+## convert into binary variable 0 or 1
+as.integer(TRUE)
+as.integer(FALSE)
+
+x <- c(TRUE, FALSE, TRUE) # a vector with logical values
+mean(x) # proportion of TRUEs
+sum(x) # number of TRUEs
+
+FALSE & TRUE
+TRUE & TRUE
+TRUE & FALSE & TRUE
+(TRUE|FALSE) & FALSE # the parentheses evaluate to TRUE
+TRUE | (FALSE & FALSE) # the parentheses evaluate to FALSE
+
+TF1 <- c(TRUE, FALSE, FALSE)
+TF2 <- c(TRUE, FALSE, TRUE)
+TF1 | TF2
+TF1 & TF2
+```
+## Section 2.2.2: Relational Operators
+```{r}
+4 > 3
+"Hello" == "hello"
+"Hello" != "hello"
+x <- c(3, 2, 1, -2, -1)
+x >= 2
+x != 1
+## logical conjunction of two vectors with logical values
+(x > 0) & (x <= 2)
+## logical disjunction of two vectors with logical values
+(x > 2) | (x <= -1)
+
+x.int <- (x > 0) & (x <= 2) # logical vector
+x.int
+
+mean(x.int) # proportion of TRUEs
+sum(x.int)  # number of TRUEs
+```
+## Section 2.2.3: Subsetting
+```{r}
+## callback rate for black-sounding names
+mean(resume$call[resume$race == "black"])
+## このコマンドのシンタックスは，resume というデータフレーム内の call変数のうち，race 変数が black に等しい観察を抽出している。
+
+## race of first 5 observations
+resume$race[1:5]
+## comparison of first 5 observations
+(resume$race == "black")[1:5]
+
+dim(resume) # dimension of original data frame
+## subset blacks only
+resumeB <- resume[resume$race == "black", ]
+## 角括弧 [,] が，元のデータフレームから行を抽出するために使われていることに注目してほしい。ベクトルから要素抽出する場合と異なり，行と列の抽出を区切るためにコンマを使用している。このコンマは重要で，これがないとエラーになる。
+dim(resumeB) # this data.frame has fewer rows than the original data.frame
+mean(resumeB$call) # callback rate for blacks
+
+## keep "call" and "firstname" variables 
+## also keep observations with black female-sounding names
+resumeBf <- subset(resume, select = c("call","firstname"),
+                   subset = (race == "black" & sex == "female"))
+head(resumeBf)
+## subset() 関数を使う場合には，引数 subset のラベルを省略することも可能 である。例えば，subset(resume, subset = (race == "black" & sex == "female")) は， subset(resume, race == "black" & sex == "female") と短縮できる。
+## ここで，race 変数や sex 変数が属するデータフレーム名をresume$race == "black"と指定する必要はない
+
+## an alternative syntax with the same results
+## resumeBf <- resume[resume$race == "black" & resume$sex == "female",
+##                    c("call", "firstname")]
+## black male
+resumeBm <- subset(resume, subset = (race == "black") & (sex == "male"))
+## white female
+resumeWf <- subset(resume, subset = (race == "white") & (sex == "female"))
+## white male
+resumeWm <- subset(resume, subset = (race == "white") & (sex == "male"))
+## racial gaps
+mean(resumeWf$call) - mean(resumeBf$call) # among females
+mean(resumeWm$call) - mean(resumeBm$call) # among males
+## Actually racial disparities do exist, but not different by gender. 
+## For both female and male, 3 percentage points higher for whites than for blacks.
+```
+## Section 2.2.4: Simple Conditional Statements
+```{r}
+
+
+
+
+
+
+
+```
+
